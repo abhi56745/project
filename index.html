@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Productivity Toolkit</title>
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>📋 Productivity Toolkit</h1>
+    <div class="header-controls">
+      <div id="time-widget" aria-live="polite">
+        <div id="time"></div>
+        <div id="date"></div>
+      </div>
+      <div class="switch-container">
+        <label for="focus-switch-checkbox">Focus Mode</label>
+        <label class="switch" id="focus-switch" title="Toggle focus mode">
+          <input type="checkbox" id="focus-switch-checkbox">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <label class="switch" id="theme-switch" title="Toggle dark/light mode">
+        <input type="checkbox" id="theme-switch-checkbox">
+        <span class="slider"></span>
+      </label>
+    </div>
+  </header>
+
+  <main>
+    <div class="main-content">
+      <div class="glass-card">
+        <nav class="tab-buttons" role="tablist">
+          <button id="tab-btn-tasks" role="tab" aria-controls="tasks" class="active-tab">🗒 Tasks</button>
+          <button id="tab-btn-timer" role="tab" aria-controls="timer">🍅 Timer</button>
+          <button id="tab-btn-stopwatch" role="tab" aria-controls="stopwatch">⏱ Stopwatch</button>
+          <button id="tab-btn-bmi" role="tab" aria-controls="bmi">⚖️ BMI</button>
+        </nav>
+
+        <section id="tasks" class="tab active" role="tabpanel">
+          <h2>Task Manager</h2>
+          <div class="input-group">
+            <input id="taskInput" type="text" placeholder="Write a new task..." aria-label="New task input" />
+            <select id="taskPriority" aria-label="Task priority">
+                <option value="medium">Medium Priority</option>
+                <option value="high">High Priority</option>
+                <option value="low">Low Priority</option>
+            </select>
+            <button id="addTaskBtn">Add Task</button>
+          </div>
+          <div class="task-controls">
+            <input id="taskSearch" type="text" placeholder="Search tasks..." aria-label="Search tasks">
+          </div>
+          <ul id="taskList" role="list" aria-live="polite"></ul>
+          <div class="data-management">
+             <button id="exportDataBtn">Export Data</button>
+             <button id="importDataBtn">Import Data</button>
+             <input type="file" id="importFileInput" hidden accept=".json">
+          </div>
+        </section>
+
+        <section id="timer" class="tab" role="tabpanel">
+          <h2>Pomodoro Timer</h2>
+          <div id="timerDisplay" aria-live="polite">25:00</div>
+          <div class="timer-presets">
+            <button class="timer-preset-btn" data-minutes="25">Work (25min)</button>
+            <button class="timer-preset-btn" data-minutes="5">Break (5min)</button>
+            <button class="timer-preset-btn" data-minutes="15">Long Break (15min)</button>
+          </div>
+          <div class="input-group">
+              <input id="customMinutes" type="number" placeholder="Or enter custom minutes..." aria-label="Custom timer minutes" min="1">
+              <button id="setCustomTimerBtn">Set</button>
+          </div>
+          <div class="controls">
+            <button id="startTimerBtn">▶️ Start</button>
+            <button id="pauseTimerBtn">⏸️ Pause</button>
+            <button id="resetTimerBtn">🔄 Reset</button>
+          </div>
+        </section>
+
+        <section id="stopwatch" class="tab" role="tabpanel">
+          <h2>Stopwatch</h2>
+          <div id="timeDisplay" aria-live="polite">00:00:00</div>
+          <div class="controls">
+            <button id="startStopwatchBtn">▶️ Start</button>
+            <button id="pauseStopwatchBtn">⏸️ Pause</button>
+            <button id="resetStopwatchBtn">🔄 Reset</button>
+          </div>
+        </section>
+
+        <section id="bmi" class="tab" role="tabpanel">
+          <h2>BMI Calculator</h2>
+          <div class="bmi-inputs">
+            <label>Weight (kg):
+              <input id="weight" type="number" step="0.1" min="1" />
+            </label>
+            <label>Height (cm):
+              <input id="height" type="number" step="0.1" min="1" />
+            </label>
+          </div>
+          <button id="calculateBmiBtn">Calculate BMI</button>
+          <div id="bmiResult" aria-live="polite"></div>
+        </section>
+      </div>
+    </div>
+    <aside class="sidebar">
+        <div id="stats-widget" class="widget glass-card" aria-live="polite">
+            <h2>Today's Progress</h2>
+            <div id="stats-rings">
+                <div class="ring-container">
+                    <div id="tasks-ring" class="progress-ring" style="--value: 0;" aria-label="Progress ring showing completed tasks">
+                        <span id="tasks-ring-value" class="ring-label">0/0</span>
+                    </div>
+                    <span>Tasks Done</span>
+                </div>
+                <div class="ring-container">
+                    <div id="pomodoro-ring" class="progress-ring" style="--value: 0;" aria-label="Progress ring showing completed Pomodoro sessions">
+                        <span id="pomodoro-ring-value" class="ring-label">0</span>
+                    </div>
+                    <span>Sessions</span>
+                </div>
+            </div>
+        </div>
+        <div id="quote-widget" class="widget glass-card">
+            <h2>Quote of the Moment</h2>
+            <div id="quote-card">
+                <p id="quote-text"></p>
+                <p id="quote-author"></p>
+            </div>
+        </div>
+        <div id="weather-widget" class="widget glass-card" aria-live="polite">
+            <h2>Local Weather</h2>
+            <p id="weather-info"><span class="loader"></span> Loading...</p>
+        </div>
+        <div id="notes-widget" class="widget glass-card">
+            <h2>Quick Notes</h2>
+            <textarea id="quickNotes" placeholder="Jot down your thoughts..." aria-label="Quick notes"></textarea>
+        </div>
+    </aside>
+  </main>
+  
+  <div id="toast" class="toast" role="status" aria-live="assertive"></div>
+
+  <div id="confirmationModal" class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modal-title">
+    <div class="modal-content glass-card">
+      <h3 id="modal-title" class="modal-title-text">Confirm Action</h3>
+      <p id="modal-message">Are you sure you want to proceed?</p>
+      <div class="modal-actions">
+        <button id="modal-cancel-btn">Cancel</button>
+        <button id="modal-confirm-btn" class="btn-danger">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
